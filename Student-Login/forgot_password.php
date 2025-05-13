@@ -84,8 +84,9 @@ $conn->close();
             padding: 0;
         }
         .container {
+            height: 350px;
             width: 400px;
-            margin: 100px auto;
+            margin: 150px auto;
             background: white;
             padding: 30px;
             border-radius: 15px;

@@ -56,8 +56,8 @@ $conn->close();
         flex-direction: column;
         justify-content: center;
         align-items: center;
-
-        margin: 100px auto;
+        border-radius: 10px;
+        margin: 150px auto;
         padding: 0 30px 20px 30px;
         box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9);
     }
@@ -141,10 +141,7 @@ $conn->close();
                     required />
                 <i class="fa-solid fa-eye toggle-password" data-toggle="cpassword"></i>
             </p>
-            <small style="color: red; font-size: 0.9rem;">
-                Password must be at least 8 characters and include uppercase, lowercase, number,
-                and special character.
-            </small>
+            <small style="color: red; font-size: 0.9rem;" id="sms"></small>
             <p>
                 <input type="submit" value="Reset Password" class="reset" />
             </p>
@@ -157,10 +154,14 @@ $conn->close();
             const password = document.getElementById('password').value;
             const cpassword = document.getElementById('cpassword').value;
 
+            const sms=document.getElementById('sms');
+            const text="Password must be at least 8 characters and include uppercase,lowercase, number, and special character.";
+
             const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
             if (!strongPasswordRegex.test(password)) {
-                alert("Password must be at least 8 characters and include uppercase, lowercase, number, and special character.");
+                sms.innerHTML=text;
+                // alert("Password must be at least 8 characters and include uppercase, lowercase, number, and special character.");
                 e.preventDefault();
             } else if (password !== cpassword) {
                 alert("Passwords do not match.");
