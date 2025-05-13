@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Registration</title>
+    <link rel="stylesheet" href="style.css" /><!--? v=<?php echo time(); ?>-->
+</head>
+
+<body>
+    <div class="outer">
+        <div class="inner">
+            <header class="sinheader">
+                <h1>Student Registration</h1>
+            </header>
+
+            <main class="sinbody">
+                <form id="registrationForm" action="register.php" method="post" enctype="multipart/form-data">
+                    <div class="container">
+                        <p>
+                            <label>Full Name <span style="color: red">*</span></label>
+                            <input type="text" name="name" id="fullname" placeholder="Enter Your Name" required />
+                        </p>
+                        <p>
+                            <label>Roll Number <span style="color: red">*</span></label>
+                            <input type="text" name="roll_number" id="email" placeholder="Enter Your Roll Number" required />
+                        </p>
+                    </div>
+                    <div class="container">
+                        <p>
+                            <label>Email <span style="color: red">*</span></label>
+                            <input type="text" name="email"  placeholder="Enter Your Email" required />
+                        </p>
+                        <p>
+                            <label>Mobile No. <span style="color: red">*</span></label>
+                            <input type="number" name="mobile" id="mobile" placeholder="Enter Your Mobile No." required />
+                        </p>
+                    </div>
+                    <div class="container">
+                    <p>
+                        <label>Upload Photo <span style="color: red">*</span></label>
+                        <input type="file" name="photo"  required />
+                    </p>
+                    <p>
+                        <label>Gender <span style="color: red">*</span></label>
+                        <select required name="gender">
+                            <option disabled selected>Select gender</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Others</option>
+                        </select>
+                    </p>
+                </div>
+                <!-- <small>Password must contain at least 8 characters, including uppercase, lowercase, number, and special character.</small> -->
+
+                <div class="container">
+                    
+                    <p>
+                        <label>Password <span style="color: red">*</span></label>
+                        <input type="password" name="password" id="password" placeholder="Enter Your Password"
+                            required />
+                    </p>
+                    <p>
+                        <label>Comform Your Password <span style="color: red">*</span></label>
+                        <input type="password" name="cpassword" id="cpassword" placeholder="Enter Your Conform Password"
+                            required />
+                    </p>
+                   
+                </div>
+                <small style="color: red; font-size: 0.9rem;">
+                    Password must be at least 8 characters and include uppercase, 
+                    lowercase, number, and special character.
+                </small>
+                    <p>
+                        <input type="submit" name="" id="submit" value="Submit" />
+                    </p>
+                </form>
+            </main>
+
+            <footer class="sinfooter">
+                <p>
+                    Alredy have an account?
+                    <a href="../Student-Login/index.html">Login</a>
+                </p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function (e) {
+            const password = document.getElementById('password').value;
+            const cpassword = document.getElementById('cpassword').value;
+    
+            const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    
+            if (!strongPasswordRegex.test(password)) {
+                alert("Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.");
+                e.preventDefault(); // Stop form submission
+            } else if (password !== cpassword) {
+                alert("Passwords do not match.");
+                e.preventDefault(); // Stop form submission
+            }
+        });
+    </script>
+    
+</body>
+</html>

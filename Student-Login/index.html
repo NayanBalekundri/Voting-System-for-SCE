@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration </title>
+   <link rel="stylesheet" href="style.css">   <!-- ? v=<?php echo time(); ?> -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  </head>
+<body>
+   
+    <a href="../Admin/admin_login.php" class="admin-link"><i class="fa fa-user"></i> Admin Login</a>
+    <div class="outer">
+        <div class="inner">
+            <header class="sinheader">
+                <h1>Student Login Form</h1>
+            </header>
+
+            <main class="sinbody">
+                <form action="login.php" method="post">
+                    <p>
+                        <label for="roll-number">Roll Number</label>
+                        <input type="text" name="roll_number" id="roll_number" placeholder="Enter Your Roll Number" required />
+                    </p>
+                    <p>
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" placeholder="Enter Your Password" required />
+                    </p>
+                    <p>
+                        <a href="forgot_password.php">Forgot Password?</a>
+                    </p>
+                    <p>
+                        
+                        <input type="submit" name="" id="submit" value="Login" />
+                    </p>
+                </form>
+
+            </main>
+
+            <footer class="sinfooter">
+                <p>Don't have an account? <a href="../Student-Register/register.html">Sign Up</a></p>
+            </footer>
+        </div>
+        </div>
+
+    
+</body>
+</html>

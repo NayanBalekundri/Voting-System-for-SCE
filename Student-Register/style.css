@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'lato', sans-serif;
+}
+
+.container {
+    display: flex;
+    gap: 10px;
+}
+
+.container p {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
+.sinheader h1{
+    text-align: center;
+    color: #2c3e50;
+    
+}
+
+.outer {
+
+    width: 100vw;
+    height: 100vh;
+}
+
+.inner {
+    width: 600px;
+    margin: 0 auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 20px 40px;
+    background-color: #ffffff09;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9);
+    border-radius: 10px;
+
+    z-index: 2;
+}
+
+h1 {
+    font-size: 1.7rem;
+    color: #212121;
+    text-align: center;
+}
+
+.sinheader {
+
+    font-size: 0.2rem;
+    color: #555;
+}
+
+.sinbody {
+    margin: 10px 0;
+}
+
+.sinbody p {
+    margin: 10px 0;
+}
+
+.sinbody p label {
+    display: block;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.sinbody p input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #cccc;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
+
+.sinbody p input[type="submit"] {
+    background-color: #3498db;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.sinbody p input[type="submit"]:hover {
+    background-color: #083350;
+}
+
+.sinfooter p {
+    color: #555;
+    text-align: center;
+}
+
+.sinfooter p a {
+    color: #3498db;
+}
+
+.sinfooter p a:hover {
+    color: blue;
+}
