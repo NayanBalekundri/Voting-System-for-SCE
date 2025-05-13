@@ -19,7 +19,9 @@ body {
     border-radius: 4px;
     font-size: 0.8rem;
     margin-top: 4px;
+   
 }
+
 .sinheader h1{
     text-align: center;
     color: #2c3e50;
@@ -103,4 +105,22 @@ h1 {
 
 .sinfooter p a:hover {
     color: blue;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input[type="password"] {
+  width: 100%;
+  padding-right: 30px;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 62%;
+  right: 20px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
 }

@@ -136,7 +136,7 @@ $conn->close();
     <h2>Forgot Password</h2>
     <form method="post">
         <label>Roll Number:</label>
-        <input type="text" name="roll_number" value="<?= $_SESSION['roll_number'] ?? '' ?>" required>
+        <input type="text" maxlength="12" pattern="[A-Za-z0-9]{12}" name="roll_number" value="<?= $_SESSION['roll_number'] ?? '' ?>" required>
 
         <label>Email:</label>
         <input type="email" name="email" value="<?= $_SESSION['email'] ?? '' ?>" required>
