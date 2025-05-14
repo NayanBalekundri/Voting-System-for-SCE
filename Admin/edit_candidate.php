@@ -1,85 +1,85 @@
 <?php
-    session_start();
-    $conn = mysqli_connect('localhost', 'root', '', 'studentdatabase');
+session_start();
+include '../connect.php';
 
-    // Check if user is logged in as admin
-    if (!isset($_SESSION['adminlogin'])) {
-        echo '<script>
+// Check if user is logged in as admin
+if (!isset($_SESSION['adminlogin'])) {
+    echo '<script>
                     alert("Please login as admin to edit candidates");
                     location = "AdminLogin.php";
                 </script>';
-        exit();
-    }
+    exit();
+}
 
-    // Get candidate ID from URL
-    $candidate_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+// Get candidate ID from URL
+$candidate_id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
-    if ($candidate_id <= 0) {
-        echo '<script>
+if ($candidate_id <= 0) {
+    echo '<script>
                     alert("Invalid candidate ID");
                     location = "AdminDashboard.php";
                 </script>';
-        exit();
-    }
+    exit();
+}
 
-    // Get candidate details
-    $candidate_query = mysqli_query($conn, "SELECT * FROM addcandidate WHERE id = '$candidate_id'");
-    $candidate = mysqli_fetch_assoc($candidate_query);
+// Get candidate details
+$candidate_query = mysqli_query($conn, "SELECT * FROM addcandidate WHERE id = '$candidate_id'");
+$candidate = mysqli_fetch_assoc($candidate_query);
 
-    if (!$candidate) {
-        echo '<script>
+if (!$candidate) {
+    echo '<script>
                     alert("Candidate not found");
                     location = "AdminDashboard.php";
                 </script>';
-        exit();
+    exit();
+}
+
+// Get candidate positions
+$positions_query = mysqli_query($conn, "SELECT position FROM candidate_positions WHERE candidate_id = '$candidate_id'");
+$selected_positions = [];
+while ($pos = mysqli_fetch_assoc($positions_query)) {
+    $selected_positions[] = $pos['position'];
+}
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $cname = $_POST['cname'];
+    $positions = $_POST['positions'];
+    $description = $_POST['description'];
+
+    // Handle photo upload
+    $photo = $candidate['photo']; // Keep existing photo by default
+    if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
+        $photo = $_FILES['photo']['name'];
+        move_uploaded_file($_FILES['photo']['tmp_name'], "images/$photo");
     }
 
-    // Get candidate positions
-    $positions_query = mysqli_query($conn, "SELECT position FROM candidate_positions WHERE candidate_id = '$candidate_id'");
-    $selected_positions = [];
-    while ($pos = mysqli_fetch_assoc($positions_query)) {
-        $selected_positions[] = $pos['position'];
-    }
+    // Start transaction
+    mysqli_begin_transaction($conn);
 
-    // Handle form submission
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $cname = $_POST['cname'];
-        $positions = $_POST['positions'];
-        $description = $_POST['description'];
+    try {
+        // Update candidate details
+        mysqli_query($conn, "UPDATE addcandidate SET cname = '$cname', description = '$description', photo = '$photo' WHERE id = '$candidate_id'");
 
-        // Handle photo upload
-        $photo = $candidate['photo']; // Keep existing photo by default
-        if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
-            $photo = $_FILES['photo']['name'];
-            move_uploaded_file($_FILES['photo']['tmp_name'], "images/$photo");
+        // Delete existing positions
+        mysqli_query($conn, "DELETE FROM candidate_positions WHERE candidate_id = '$candidate_id'");
+
+        // Insert new positions
+        foreach ($positions as $position) {
+            mysqli_query($conn, "INSERT INTO candidate_positions (candidate_id, position) VALUES('$candidate_id', '$position')");
         }
 
-        // Start transaction
-        mysqli_begin_transaction($conn);
-
-        try {
-            // Update candidate details
-            mysqli_query($conn, "UPDATE addcandidate SET cname = '$cname', description = '$description', photo = '$photo' WHERE id = '$candidate_id'");
-
-            // Delete existing positions
-            mysqli_query($conn, "DELETE FROM candidate_positions WHERE candidate_id = '$candidate_id'");
-
-            // Insert new positions
-            foreach ($positions as $position) {
-                mysqli_query($conn, "INSERT INTO candidate_positions (candidate_id, position) VALUES('$candidate_id', '$position')");
-            }
-
-            mysqli_commit($conn);
-            echo '<script>
+        mysqli_commit($conn);
+        echo '<script>
                         alert("Candidate updated successfully");
                         location = "AdminDashboard.php";
                     </script>';
-            exit();
-        } catch (Exception $e) {
-            mysqli_rollback($conn);
-            $error = "Error updating candidate: " . $e->getMessage();
-        }
+        exit();
+    } catch (Exception $e) {
+        mysqli_rollback($conn);
+        $error = "Error updating candidate: " . $e->getMessage();
     }
+}
 ?>
 
 <!DOCTYPE html>
@@ -140,7 +140,8 @@
                         <form method="post" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label class="form-label">Candidate Name</label>
-                                <input type="text" class="form-control" name="cname" value="<?php echo $candidate['cname']; ?>" required />
+                                <input type="text" class="form-control" name="cname"
+                                    value="<?php echo $candidate['cname']; ?>" required />
                             </div>
 
                             <div class="mb-3">
@@ -157,7 +158,8 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Description</label>
-                                <textarea class="form-control" name="description" rows="3"><?php echo $candidate['description']; ?></textarea>
+                                <textarea class="form-control" name="description"
+                                    rows="3"><?php echo $candidate['description']; ?></textarea>
                             </div>
 
                             <div class="mb-3">

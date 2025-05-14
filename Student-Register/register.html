@@ -8,8 +8,6 @@
     <title>Student Registration</title>
     <link rel="stylesheet" href="style.css" /><!--? v=<?php echo time(); ?>-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
-
 </head>
 
 <body>
@@ -29,8 +27,7 @@
                         <p>
                             <label>Roll Number <span style="color: red">*</span></label>
                             <input type="text" name="roll_number" id="email" placeholder="Enter Your Roll Number"
-                                maxlength="12" pattern="[A-Za-z0-9]{12}"
-                                required />
+                                maxlength="12" pattern="[A-Za-z0-9]{12}" required />
                         </p>
                     </div>
                     <div class="container">
@@ -59,9 +56,7 @@
                             </select>
                         </p>
                     </div>
-
                     <div class="container">
-
                         <p class="password-wrapper">
                             <label>Password <span style="color: red">*</span></label>
                             <input type="password" name="password" id="password" placeholder="Enter Your Password"
@@ -75,9 +70,7 @@
                             <i class="fa-solid fa-eye toggle-password" data-toggle="cpassword"></i>
                         </p>
                     </div>
-
                     <small style="color: red; font-size: 0.9rem;" id="sms"></small>
-                    
                     <p>
                         <input type="submit" name="" id="submit" value="Submit" />
                     </p>
@@ -98,13 +91,13 @@
             const password = document.getElementById('password').value;
             const cpassword = document.getElementById('cpassword').value;
 
-            const sms=document.getElementById('sms');
-            const text="Password must be at least 8 characters and include uppercase,lowercase, number, and special character.";
+            const sms = document.getElementById('sms');
+            const text = "Password must be at least 8 characters and include uppercase,lowercase, number, and special character.";
 
             const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
             if (!strongPasswordRegex.test(password)) {
-                sms.innerHTML=text
+                sms.innerHTML = text
                 // alert("Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.");
                 e.preventDefault(); // Stop form submission
             } else if (password !== cpassword) {
@@ -134,11 +127,7 @@
             // Initially hide the icon
             icon.style.display = 'none';
         });
-
-        
-
     </script>
-
 </body>
 
 </html>

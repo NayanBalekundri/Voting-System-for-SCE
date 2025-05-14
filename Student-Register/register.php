@@ -1,5 +1,5 @@
 <?php
-$conn = mysqli_connect('localhost', 'root', '', 'studentdatabase');
+include '../connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'] ?? null;
@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $insert_query = "INSERT INTO studentsregistration(name, roll_number, email,mobile, gender, photo, password, cpassword, status) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)";
         $stmt = $conn->prepare($insert_query);
-        $stmt->bind_param("ssssssss", $name, $roll_number,$email, $mobile, $gender, $image, $password, $cpassword);
+        $stmt->bind_param("ssssssss", $name, $roll_number, $email, $mobile, $gender, $image, $password, $cpassword);
 
         if ($stmt->execute()) {
             echo '

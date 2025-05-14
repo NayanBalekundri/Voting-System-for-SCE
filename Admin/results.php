@@ -1,17 +1,17 @@
 <?php
-    session_start();
-    $conn = mysqli_connect('localhost', 'root', '', 'studentdatabase');
+session_start();
+include '../connect.php';
 
-    // Check if user is logged in as admin
-    if (!isset($_SESSION['adminlogin'])) {
-        echo '<script>
+// Check if user is logged in as admin
+if (!isset($_SESSION['adminlogin'])) {
+    echo '<script>
                     alert("Please login as admin to view results");
                     location = "admin_login.php";
                 </script>';
-        exit();
-    }
+    exit();
+}
 
-    $positions = ['GS', 'LR', 'Sports Secretary', 'Cultural Activity', 'Other Activity'];
+$positions = ['GS', 'LR', 'Sports Secretary', 'Cultural Activity', 'Other Activity'];
 ?>
 
 <!DOCTYPE html>
@@ -81,7 +81,8 @@
             margin-bottom: 0;
         }
 
-        .table th, .table td {
+        .table th,
+        .table td {
             padding: 12px 8px;
             vertical-align: middle;
         }
@@ -101,7 +102,8 @@
                 font-size: 1.5rem;
             }
 
-            .table th, .table td {
+            .table th,
+            .table td {
                 padding: 8px 4px;
                 font-size: 0.9rem;
             }
@@ -121,7 +123,8 @@
                 font-size: 1.2rem;
             }
 
-            .table th, .table td {
+            .table th,
+            .table td {
                 padding: 6px 3px;
                 font-size: 0.85rem;
             }
@@ -146,9 +149,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="AdminDashboard.php">Dashboard</a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="adminlogout.php">Logout</a>
-                    </li> -->
                 </ul>
             </div>
         </div>
@@ -168,13 +168,13 @@
             if (!empty($candidates)) {
                 $max_votes = $candidates[0]['votes'];
                 $total_candidates = count($candidates);
-                
+
                 // Get runner-up votes (second highest)
                 $runner_up_votes = 0;
                 if ($total_candidates > 1) {
                     $runner_up_votes = $candidates[1]['votes'];
                 }
-        ?>
+                ?>
                 <div class="card result-card">
                     <div class="card-header">
                         <h3 class="position-title text-center"><?php echo $position; ?></h3>
@@ -192,7 +192,7 @@
                                 <?php foreach ($candidates as $index => $candidate) {
                                     $is_winner = false;
                                     $is_runner_up = false;
-                                    
+
                                     if ($total_candidates === 1) {
                                         $is_winner = true;
                                     } else {
@@ -202,14 +202,14 @@
                                             $is_runner_up = true;
                                         }
                                     }
-                                    
+
                                     $row_class = '';
                                     if ($is_winner) {
                                         $row_class = 'winner';
                                     } elseif ($is_runner_up) {
                                         $row_class = 'runner-up';
                                     }
-                                ?>
+                                    ?>
                                     <tr class="<?php echo $row_class; ?>">
                                         <td><?php echo $candidate['cname']; ?></td>
                                         <td><?php echo $candidate['votes']; ?></td>
@@ -228,11 +228,10 @@
                         </table>
                     </div>
                 </div>
-        <?php
+                <?php
             }
         } ?>
     </div>
-
 </body>
 
 </html>

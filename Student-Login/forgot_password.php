@@ -7,7 +7,8 @@ require 'phpmailer/Exception.php';
 require 'phpmailer/PHPMailer.php';
 require 'phpmailer/SMTP.php';
 
-$conn = mysqli_connect('localhost', 'root', '', 'studentdatabase');
+include '../connect.php';
+
 $message = "";
 $otp_sent = false;
 
@@ -44,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['send_otp'])) {
                 $mail->addAddress($email);
                 $mail->isHTML(true);
                 $mail->Subject = "OTP Verification for Password Reset";
-                $mail->Body    = "<h2>Hello,</h2><p>Your OTP is:</p><h3>$otp</h3><p>Valid for 10 minutes.</p>";
+                $mail->Body = "<h2>Hello,</h2><p>Your OTP is:</p><h3>$otp</h3><p>Valid for 10 minutes.</p>";
 
                 $mail->send();
                 $otp_sent = true;
@@ -73,44 +74,51 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Forgot Password - OTP</title>
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
-            /* background: #ecf0f3; */
             margin: 0;
             padding: 0;
         }
+
         .container {
-            height: 350px;
             width: 400px;
-            margin: 150px auto;
+            margin: 100px auto;
             background: white;
             padding: 30px;
             border-radius: 15px;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9);
         }
+
         h2 {
             text-align: center;
             color: #2c3e50;
         }
+
         form {
             display: flex;
             flex-direction: column;
         }
+
         label {
             margin-top: 10px;
             font-weight: bold;
         }
-        input[type="text"], input[type="email"], input[type="submit"] {
+
+        input[type="text"],
+        input[type="email"],
+        input[type="submit"] {
             padding: 10px;
             margin-top: 5px;
             border: 1px solid #bdc3c7;
             border-radius: 5px;
             font-size: 16px;
         }
+
         input[type="submit"] {
             background-color: #3498db;
             color: white;
@@ -119,41 +127,47 @@ $conn->close();
             cursor: pointer;
             transition: background-color 0.3s;
         }
+
         input[type="submit"]:hover {
             background-color: #083350;
         }
+
         .message {
             margin-top: 15px;
             text-align: center;
             color: green;
         }
+
         .error {
             color: red;
         }
     </style>
 </head>
+
 <body>
-<div class="container">
-    <h2>Forgot Password</h2>
-    <form method="post">
-        <label>Roll Number:</label>
-        <input type="text" maxlength="12" pattern="[A-Za-z0-9]{12}" name="roll_number" value="<?= $_SESSION['roll_number'] ?? '' ?>" required>
-
-        <label>Email:</label>
-        <input type="email" name="email" value="<?= $_SESSION['email'] ?? '' ?>" required>
-
-        <input type="submit" name="send_otp" value="Send OTP">
-    </form>
-
-    <?php if ($otp_sent || isset($_SESSION['otp'])): ?>
+    <div class="container">
+        <h2>Forgot Password</h2>
         <form method="post">
-            <label>Enter OTP:</label>
-            <input type="text" name="otp" required>
-            <input type="submit" name="verify_otp" value="Verify OTP">
-        </form>
-    <?php endif; ?>
+            <label>Roll Number:</label>
+            <input type="text" maxlength="12" pattern="[A-Za-z0-9]{12}" name="roll_number"
+                value="<?= $_SESSION['roll_number'] ?? '' ?>" required>
 
-    <div class="message"><?= $message ?></div>
-</div>
+            <label>Email:</label>
+            <input type="email" name="email" value="<?= $_SESSION['email'] ?? '' ?>" required>
+
+            <input type="submit" name="send_otp" value="Send OTP">
+        </form>
+
+        <?php if ($otp_sent || isset($_SESSION['otp'])): ?>
+            <form method="post">
+                <label>Enter OTP:</label>
+                <input type="text" name="otp" required>
+                <input type="submit" name="verify_otp" value="Verify OTP">
+            </form>
+        <?php endif; ?>
+
+        <div class="message"><?= $message ?></div>
+    </div>
 </body>
+
 </html>

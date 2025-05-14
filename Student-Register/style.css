@@ -19,13 +19,13 @@ body {
     border-radius: 4px;
     font-size: 0.8rem;
     margin-top: 4px;
-   
+
 }
 
-.sinheader h1{
+.sinheader h1 {
     text-align: center;
     color: #2c3e50;
-    
+
 }
 
 .outer {
@@ -108,19 +108,19 @@ h1 {
 }
 
 .password-wrapper {
-  position: relative;
+    position: relative;
 }
 
 .password-wrapper input[type="password"] {
-  width: 100%;
-  padding-right: 30px;
+    width: 100%;
+    padding-right: 30px;
 }
 
 .toggle-password {
-  position: absolute;
-  top: 62%;
-  right: 20px;
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: #888;
+    position: absolute;
+    top: 62%;
+    right: 20px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
 }

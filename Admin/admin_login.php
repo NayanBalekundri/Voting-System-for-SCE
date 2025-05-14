@@ -1,8 +1,7 @@
 <?php
 session_start();
 
-$conn = mysqli_connect('localhost', 'root', '', 'studentdatabase');
-
+include '../connect.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
     $password = $_POST['password'];

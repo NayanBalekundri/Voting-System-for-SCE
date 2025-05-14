@@ -1,35 +1,31 @@
 <?php
 
 
-	session_start();
-	$voterdata = $_SESSION['voterdata'];
+session_start();
+$voterdata = $_SESSION['voterdata'];
 
-	// Check if user is logged in. If not, redirect to login page.
-	$voterdata = isset($_SESSION['voterdata']) ? $_SESSION['voterdata'] : null;
-	if (!$voterdata) {
-		echo '<script>
-					alert("You are not logged in! Redirecting to login page.");
-					location = "../Student-Login/index.html";
-				</script>';
-		exit();
-	}
+// Check if user is logged in. If not, redirect to login page.
+$voterdata = isset($_SESSION['voterdata']) ? $_SESSION['voterdata'] : null;
+if (!$voterdata) {
+	echo '<script>
+				alert("You are not logged in! Redirecting to login page.");
+				location = "../Student-Login/index.html";
+		  </script>';
+	exit();
+}
 
-	$conn = mysqli_connect('localhost', 'root', '', 'studentdatabase');
+include '../connect.php';
 
-	$query = "SELECT * FROM addcandidate";
-	$result = mysqli_query($conn, $query);
+$query = "SELECT * FROM addcandidate";
+$result = mysqli_query($conn, $query);
 
-
-	if ($_SESSION['voterdata']['status'] == 0) {
-		$status = '<b style = "color:green;">Not Voted</b>';
-	} else {
-		$status = '<b style = "color:red;">Voted</b>';
-	}
-
-
+if ($_SESSION['voterdata']['status'] == 0) {
+	$status = '<b style = "color:green;">Not Voted</b>';
+} else {
+	$status = '<b style = "color:red;">Voted</b>';
+}
 
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -41,7 +37,8 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -57,7 +54,6 @@
 			right: 0;
 			z-index: 1000;
 			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
 		}
 
 		.nav-item a {
@@ -150,17 +146,18 @@
 		.container {
 			box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9);
 		}
-		.carousel-caption{
+
+		.carousel-caption {
 			margin-bottom: 200px;
 		}
 	</style>
-
 </head>
 
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
-			<a class="navbar-brand " style="font-family: sans;color: lawngreen; " href="#"><i class="fa fa-fw fa-globe"></i> Online Voting System</a>
+			<a class="navbar-brand " style="font-family: sans;color: lawngreen; " href="#"><i
+					class="fa fa-fw fa-globe"></i> Online Voting System</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -189,14 +186,13 @@
 			<div class="carousel-item active">
 				<img src="Image/21.jpg" class="d-block w-100" height="700px" alt="...">
 				<div class="carousel-caption d-md-block">
-			         <h3>Welcome to the Student Council Election</h3>
+					<h3>Welcome to the Student Council Election</h3>
 					<h4> Vote Smart. Vote Secure. Vote for Your Future.</h4>
-			      </div>
+				</div>
 			</div>
 		</div>
 	</div>
 	<br><br><br>
-
 
 	<div class="container-fluid py-4 " id="vote">
 		<div class="row ">
@@ -204,17 +200,19 @@
 			<div class="col-md-4 mb-4 ">
 				<div class="voter-card container">
 					<div class="card-header text-black">
-						<marquee>You can only vote once per position</marquee>
+						<h5 class="card-title text-primary text-center fw-bold">Voter Details</h5>
 					</div>
 					<div class="card-body">
 						<div class="row">
 							<div class="col-md-4">
-								<img src="<?php echo '../VoterImg/' . $voterdata['photo']; ?>" class="img-fluid rounded-square" alt="Voter Photo" style="max-width: 150px; height: 200PX; border-radius:10px; margin-bottom: 20px;">
+								<img src="<?php echo '../VoterImg/' . $voterdata['photo']; ?>"
+									class="img-fluid rounded-square" alt="Voter Photo"
+									style="max-width: 150px; height: 200PX; border-radius:10px; margin-bottom: 20px;">
 							</div>
 							<div class="col-md-8" style="padding-left: 50px;">
-								<h5 class="card-title text-primary">Voter Details</h5>
 								<ul class="list-unstyled">
-									<li style="padding-top:10px;"><strong>Name:</strong> <?php echo $voterdata['name'] ?></li>
+									<li style="padding-top:10px;"><strong>Name:</strong>
+										<?php echo $voterdata['name'] ?></li>
 									<li><strong>Roll Number:</strong> <?php echo $voterdata['roll_number'] ?></li>
 									<li><strong>Mobile No.:</strong> <?php echo $voterdata['mobile'] ?></li>
 								</ul>
@@ -238,7 +236,7 @@
 					// Check if user has voted for this position
 					$check_vote = mysqli_query($conn, "SELECT * FROM votes WHERE voter_id = '{$_SESSION['voterdata']['id']}' AND position = '$position'");
 					$has_voted_position = mysqli_num_rows($check_vote) > 0;
-				?>
+					?>
 					<div class="position-section container">
 						<h3 class="position-title text-center">
 							<?php echo $position; ?>
@@ -253,13 +251,13 @@
 										<div class="row">
 											<div class="col-md-4">
 												<img src="../Admin/images/<?php echo $row['photo']; ?>"
-													class="img-fluid candidate-photo"
-													alt="Candidate Photo">
+													class="img-fluid candidate-photo" alt="Candidate Photo">
 											</div>
 											<div class="col-md-8">
 												<p class="card-title"><strong>Name :</strong> <?php echo $row['cname']; ?></p>
-												<p class="card-text"><strong>Roll Number :</strong> <?php echo $row['roll_number'] ?? 'Not Set'; ?></p>
-												<p class="card-text"> <?php echo $row['description']  ?></p>
+												<p class="card-text"><strong>Roll Number :</strong>
+													<?php echo $row['roll_number'] ?? 'Not Set'; ?></p>
+												<p class="card-text"> <?php echo $row['description'] ?></p>
 												<form action="../Admin/vote.php" method="post">
 													<input type="hidden" name="gvotes" value="<?php echo $row['votes']; ?>">
 													<input type="hidden" name="gid" value="<?php echo $row['id']; ?>">

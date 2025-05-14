@@ -1,5 +1,5 @@
 <?php
-$conn = mysqli_connect('localhost', 'root', '', 'studentdatabase');
+include '../connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $roll_number = $_POST['roll_number'] ?? null;
@@ -64,7 +64,6 @@ $conn->close();
 
     p label {
         font-size: 1.4rem;
-        /* font-weight: bold; */
     }
 
     p input {
@@ -154,13 +153,13 @@ $conn->close();
             const password = document.getElementById('password').value;
             const cpassword = document.getElementById('cpassword').value;
 
-            const sms=document.getElementById('sms');
-            const text="Password must be at least 8 characters and include uppercase,lowercase, number, and special character.";
+            const sms = document.getElementById('sms');
+            const text = "Password must be at least 8 characters and include uppercase,lowercase, number, and special character.";
 
             const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
             if (!strongPasswordRegex.test(password)) {
-                sms.innerHTML=text;
+                sms.innerHTML = text;
                 // alert("Password must be at least 8 characters and include uppercase, lowercase, number, and special character.");
                 e.preventDefault();
             } else if (password !== cpassword) {
